@@ -1,4 +1,4 @@
-import styles from "./Navbar.module.css";
+import styles from "./Navbar.scss";
 import {useTheme} from "./../Hooks/useTheme"
 
 const Navbar = () => {

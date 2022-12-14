@@ -1,4 +1,5 @@
-import styles from "./Form.module.css";
+import styles from "./LoginForm.scss";
+import { useState } from "react";
 
 const LoginForm = () => {
 
@@ -30,7 +31,8 @@ const LoginForm = () => {
     username: login,
     password: password
   }
-  event.preventDefault();
+
+  Event.preventDefault();
   fetch("https://dhodonto.ctdprojetos.com.br/auth", {
     method: "POST",
     headers: {
@@ -41,17 +43,13 @@ const LoginForm = () => {
   })
     .then((response) => response.json())
     .then(data => console.log(data))
-};
-
 
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-      <div
-        className={`text-center card container ${styles.card}`}
-      >
-        <div className={`card-body ${styles.CardBody}`}>
+      <div className={`text-center card container ${styles.card}`}>
+        <div className={`card-body ${styles.cardBody}`}>
           <form onSubmit={(event)=>handleSubmit(event)}>
             <input
               className={`form-control ${styles.inputSpacing}`}
@@ -68,13 +66,12 @@ const LoginForm = () => {
               required
               onChange={(event)=>passValidation(event.target.value)}
             />
-            <button className="btn btn-primary" type="submit">
-              Send
-            </button>
+            <button className="btn btn-primary" type="submit">Enviar</button>
           </form>
         </div>
       </div>
     </>
-  );
+  )
+}
 
 export default LoginForm;

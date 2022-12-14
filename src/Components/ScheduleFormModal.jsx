@@ -1,4 +1,5 @@
 import ScheduleForm from './ScheduleForm';
+import styles from "./ScheduleFormModal.scss";
 
 const ScheduleFormModal = () => {
   return (
