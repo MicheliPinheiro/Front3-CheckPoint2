@@ -8,15 +8,12 @@ export function ThemeProvider(props){
     //Controle do tema aplicado
     const themeLocalStorage = localStorage.getItem('theme')
     const [theme, setTheme] = useState(themeLocalStorage || "")
+    useState(themeLocalStorage === null ? 'dark' : themeLocalStorage)
 
     function changeTheme(themeReceived){
-        if(themeReceived !== 'dark'){
-            setTheme('dark')
-            localStorage.setItem("theme", 'dark')
-        }
-        else{
-            setTheme('')
-            localStorage.setItem("theme", '')
+        if(themeReceived !== theme){
+            setTheme(themeReceived)
+            localStorage.setItem('theme', themeReceived)
         }
     }
 

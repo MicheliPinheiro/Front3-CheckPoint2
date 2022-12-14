@@ -1,23 +1,27 @@
 import styles from "./LoginForm.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
   const [password, setPassword] = useState('')
   const [login, setLogin] = useState('')
-  const [checkInputs, setCheckInputs] = useState('')
+  const [checkInputs, setCheckInputs] = useState(false)
+  const [token, setToken] = useState('')
+  const navigate = useNavigate()
 
-  function passValidation(password) {
-    setPassword(password)
-    console.log(password)
-  }
+  // function passValidation(password) {
+  //   setPassword(password)
+  //   console.log(password)
+  // }
 
-  function loginValidation(login) {
-    setLogin(login)
-    console.log(login)
-  }
+  // function loginValidation(login) {
+  //   setLogin(login)
+  //   console.log(login)
+  // }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     //Nesse handlesubmit você deverá usar o preventDefault,
     //enviar os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que faz o login /auth
@@ -32,17 +36,36 @@ const LoginForm = () => {
     password: password
   }
 
-  Event.preventDefault();
-  fetch("https://dhodonto.ctdprojetos.com.br/auth", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(dados)
-  })
-    .then((response) => response.json())
-    .then(data => console.log(data))
+  let requestHeaders = {
+    'Content-Type': 'application/json'
+  }
+
+  let requestConfiguration = {
+    method: 'POST',
+    body: JSON.stringify(dados),
+    headers: requestHeaders
+  }
+
+  try {
+    fetch(`http://dhodonto.ctdprojetos.com.br/auth`, requestConfiguration)
+      .then(response => {
+        if (response.status === 200) {
+          response.json()
+            .then(dados => {
+              setToken(dados.token)
+              localStorage.setItem('token', dados.token)
+              navigate('/home')
+            })
+        } else {
+          setCheckInputs(true)
+          alert('Login ou senha incorreto')
+        }
+      })
+  } catch (error) {
+    console.log(error)
+  }
+
+}
 
   return (
     <>
@@ -52,11 +75,11 @@ const LoginForm = () => {
         <div className={`card-body ${styles.cardBody}`}>
           <form onSubmit={(event)=>handleSubmit(event)}>
             <input
-              className={`form-control ${styles.inputSpacing}`}
+              className={`form-control ${styles.inputSpacing} ${checkInputs ? `${styles.formError}` : ''}`}
               placeholder="Login"
               name="login"
               required
-              onChange={(event)=>loginValidation(event.target.value)}
+              onChange={(event) => setLogin(event.target.value)}
             />
             <input
               className={`form-control ${styles.inputSpacing}`}
@@ -64,14 +87,15 @@ const LoginForm = () => {
               name="password"
               type="password"
               required
-              onChange={(event)=>passValidation(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
-            <button className="btn btn-primary" type="submit">Enviar</button>
+            {/* Lembrar de adicionar a estilização do erro */}
+            <button className="btn btn-primary" type="submit" onClick={(event) => handleSubmit(event)}>Enviar</button>
           </form>
         </div>
       </div>
     </>
   )
-}
+
 
 export default LoginForm;
