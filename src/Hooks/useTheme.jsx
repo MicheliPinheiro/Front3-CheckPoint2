@@ -5,7 +5,9 @@ import { createContext, useContext } from "react";
 const ThemeContext = createContext()
 
 export function ThemeProvider(props){
-    const [theme, setTheme]=useState('')
+    //Controle do tema aplicado
+    const themeLocalStorage = localStorage.getItem('theme')
+    const [theme, setTheme] = useState(themeLocalStorage || "")
 
     function changeTheme(themeReceived){
         if(themeReceived !== 'dark'){

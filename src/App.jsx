@@ -4,7 +4,7 @@ import Navbar from "./Components/Navbar";
 import {useTheme} from "./Hooks/useTheme"
 
 function App() {
-  const {theme, changeTheme} = useTheme()
+  const {theme} = useTheme()
 
   return (
     
