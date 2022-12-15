@@ -22,8 +22,7 @@ const Detail = () => {
     <>
       <DetailCard />
     {
-      detail.map(
-        detail => {
+      detail.map(detail => {
           return (
             <DetailCard 
               containerData={detail}
@@ -32,7 +31,6 @@ const Detail = () => {
         }
       )
     }
-
     </>
   )
 }

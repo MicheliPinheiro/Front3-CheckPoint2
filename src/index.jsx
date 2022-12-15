@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import App from "./App";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom";
 import Login from "./Routes/Login";
 import Detail from "./Routes/Detail";
 import Home from "./Routes/Home";
@@ -17,33 +17,36 @@ localStorage.setItem('theme', '')
 const appRouter = createBrowserRouter([
   {
     path: '',
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: 'home',
-        element: <Home/>
+        element: <Home />
       },
       {
         path: 'login',
-        element: <Login/>
+        element: <Login />
+      },
+      {
+        path: 'dentist/:id',
+        element: <Detail />
       },
       {
         path: 'detail',
-        element: <Detail/>
-      }
-    ]
-  }
-
-])
-
+        element: <Detail />
+      },
+      { path: '', loader: () => redirect('/home') }
+    ]}
+    ])
+  
 root.render(
-  <React.StrictMode>
-    <ThemeProvider>
-      {/* <Navbar />
+      <React.StrictMode>
+        <ThemeProvider>
+          {/* <Navbar />
       <Home />
       <Footer />  */}
 
-      <RouterProvider router={appRouter} />
-    </ThemeProvider>
-  </React.StrictMode>
-);
+          <RouterProvider router={appRouter} />
+        </ThemeProvider>
+      </React.StrictMode>
+    );

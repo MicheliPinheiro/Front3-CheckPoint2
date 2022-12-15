@@ -32,8 +32,8 @@ const LoginForm = () => {
   }
 
   const dados = {
-    username: login,
-    password: password
+    "username": login,
+    "password": password
   }
 
   let requestHeaders = {
@@ -48,32 +48,30 @@ const LoginForm = () => {
 
   try {
     fetch(`http://dhodonto.ctdprojetos.com.br/auth`, requestConfiguration)
-      .then(response => {
-        if (response.status === 200) {
-          response.json()
-            .then(dados => {
-              setToken(dados.token)
-              localStorage.setItem('token', dados.token)
-              navigate('/home')
-            })
-        } else {
-          setCheckInputs(true)
-          alert('Login ou senha incorreto')
-        }
-      })
-  } catch (error) {
-    console.log(error)
-  }
-
-}
-
+        .then(response => {
+          if (response.status === 200) {
+            response.json()
+              .then(dados => {
+                setToken(dados.token)
+                localStorage.setItem('token', dados.token)
+                navigate('/home')
+              })
+          } else {
+            setCheckInputs(true)
+            alert('Login ou senha incorreto')
+          }
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
       <div className={`text-center card container ${styles.card}`}>
         <div className={`card-body ${styles.cardBody}`}>
-          <form onSubmit={(event)=>handleSubmit(event)}>
+          <form onSubmit={handleSubmit}>
             <input
               className={`form-control ${styles.inputSpacing} ${checkInputs ? `${styles.formError}` : ''}`}
               placeholder="Login"
@@ -96,6 +94,5 @@ const LoginForm = () => {
       </div>
     </>
   )
-
-
+      }
 export default LoginForm;

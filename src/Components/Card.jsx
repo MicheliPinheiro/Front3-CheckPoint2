@@ -1,10 +1,10 @@
 import styles from "./Card.scss";
-import {useTheme} from "./../Hooks/useTheme"
+import { useTheme } from "./../Hooks/useTheme"
 import { Link } from "react-router-dom";
 
 const Card = (props) => {
 
-  //const { theme, changeTheme} = useTheme();
+  const { theme } = useTheme();
 
 
   return (

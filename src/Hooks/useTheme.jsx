@@ -7,11 +7,12 @@ const ThemeContext = createContext()
 export function ThemeProvider(props){
     //Controle do tema aplicado
     const themeLocalStorage = localStorage.getItem('theme')
-    const [theme, setTheme] = useState(themeLocalStorage || "")
+    const [theme, setTheme] = useState(themeLocalStorage || "light")
     useState(themeLocalStorage === null ? 'dark' : themeLocalStorage)
 
     function changeTheme(themeReceived){
-        if(themeReceived !== theme){
+        console.log(themeReceived)
+        if (themeReceived !== theme) {
             setTheme(themeReceived)
             localStorage.setItem('theme', themeReceived)
         }
