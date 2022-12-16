@@ -1,39 +1,28 @@
-import { createContext, useReducer, useContext } from "react"
+import { useContext, createContext, useState } from 'react'
 
 const ThemeContext = createContext()
 
-function themeReducer(currentTheme, action) {
-    switch (action.type) {
-        case 'toggle_theme':
-            if (action.payload.theme !== currentTheme) {
-                localStorage.setItem('theme', action.payload.theme)
-                return action.payload.theme
-            }
-        default:
-            throw new Error()
-    }   
-}
-
-function getThemeFromStorage() {
-    const themeLocalStorage = localStorage.getItem('theme')
-    return themeLocalStorage || "light"
-}
-
 export function ThemeProvider(props) {
-    const [theme, themeDispatch] = useReducer(themeReducer, {}, getThemeFromStorage)
+  const themeLocalStorage = localStorage.getItem('theme')
+  const [theme, setTheme] = useState(
+    themeLocalStorage === null ? 'dark' : themeLocalStorage
+  )
 
-    function changeTheme(newTheme) {
-        themeDispatch({type: "toggle_theme", payload: {theme: newTheme}})
+  function changeTheme(themReceived) {
+    if (themReceived !== theme) {
+      setTheme(themReceived)
+      localStorage.setItem('theme', themReceived)
     }
+  }
 
-    return (
-        <ThemeContext.Provider value={{theme, changeTheme}}>
-            {props.children}
-        </ThemeContext.Provider>
-    )
+  return (
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
+      {props.children}
+    </ThemeContext.Provider>
+  )
 }
 
 export function useTheme() {
-    const context = useContext(ThemeContext)
-    return context
+  const context = useContext(ThemeContext)
+  return context
 }

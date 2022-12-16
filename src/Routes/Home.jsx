@@ -1,19 +1,22 @@
-import Card from "./../Components/Card/Card.jsx"
-import { useDentistInfo } from "./../Hooks/useDentistInfo"
+import { useState,  useEffect } from "react"
+import Card from "./../Components/Card/Card"
 
 const Home = () => {
-  const { dentistInfo } = useDentistInfo()
+  const [dentistas, setDentistas] = useState([])
+
+  useEffect(() => {
+    fetch('https://dhodonto.ctdprojetos.com.br/dentista')
+      .then(response => response.json())
+      .then(dentista => setDentistas(dentista))
+  }, [])
 
   return (
     <>
-      <h1>Página Inicial</h1>
+      <h1>Home</h1>
       <div className="card-grid container">
-        {dentistInfo && dentistInfo.map(container => {
-            return (
-              <Card key={container.matricula} containerData={container} />
-            )
-        })
-        }
+        {dentistas.map(dentista => (
+          <Card dados={dentista} key={dentista.matricula} />
+        ))}
       </div>
     </>
   )

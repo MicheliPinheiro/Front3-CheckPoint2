@@ -1,67 +1,71 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useLogin } from "./../../Hooks/useLogin"
 import { useTheme } from "./../../Hooks/useTheme"
 import styles from "./Form.module.css"
 
 const LoginForm = () => {
-
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [login, setLogin] = useState('')
-  const [checkInputs, setCheckInputs] = useState(false)
-  const [token, setToken] = useState('')
+  const [error, setError] = useState(false)
+  const { handleSetAuthToken } = useLogin()
+  const { theme } = useTheme()
   const navigate = useNavigate()
-  const {theme} = useTheme()
 
-  function passValidation(password) {
-    setPassword(password)
-    console.log(password)
-  }
-
-  function loginValidation(login) {
-    setLogin(login)
-    console.log(login)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  }
-
-  const dados = {"username": login, "password": password}
-
-  let requestHeaders = {'Content-Type': 'application/json'}
-
-  let requestConfiguration = {method: 'POST', body: JSON.stringify(dados), headers: requestHeaders}
-
-  try {
-    fetch(`http://dhodonto.ctdprojetos.com.br/auth`, requestConfiguration)
-        .then(response => {
-          if (response.status === 200) {
-            response.json()
-              .then(dados => {
-                setToken(dados.token)
-                localStorage.setItem('token', dados.token)
-                navigate('/home')
-              })
-          } else {
-            setCheckInputs(true)
-            alert('Login ou senha incorreto')
-          }
-        })
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    if (username.length >= 5 && password.length >= 5) {
+      setError(false)
+    } else {
+      setError(true)
     }
-  
+  }, [username, password])
+
+  const handleSubmit = e => {
+    e.preventDefault()
+
+    const userData = {
+      username,
+      password
+    }
+    const requestHeaders = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+    const requestConfig = {
+      method: 'POST',
+      headers: requestHeaders,
+      body: JSON.stringify(userData)
+    }
+
+    fetch(`https://dhodonto.ctdprojetos.com.br/auth`, requestConfig).then(
+      response => {
+        if (response.ok) {
+          response.json().then(data => {
+            handleSetAuthToken(data.token)
+            navigate('/home')
+          })
+        } else {
+          setUsername('')
+          setPassword('')
+          alert('Verifique suas informações novamente')
+        }
+      }
+    )
+  }
+
   return (
     <>
-      <div className={theme === 'dark' ? `text-center card container ${styles.card} ${styles.cardDark}` : `text-center card container ${styles.card}`}>
-        <div className={`card-body ${styles.cardBody}`}>
+      <h1>Faça seu Login</h1>
+      <div className={`text-center card container ${theme} ${styles.card} ${error ? 'error' : ''}`}>
+        <div className={`card-body ${styles.CardBody}`}>
           <form onSubmit={handleSubmit}>
             <input
-              className={`form-control ${styles.inputSpacing} ${checkInputs ? `${styles.formError}` : ''}`}
+              className={`form-control ${styles.inputSpacing}`}
               placeholder="Login"
               name="login"
               required
-              onChange={(event) => setLogin(event.target.value)}
+              aria-label="login"
+              onChange={e => setUsername(e.target.value)}
             />
             <input
               className={`form-control ${styles.inputSpacing}`}
@@ -69,13 +73,18 @@ const LoginForm = () => {
               name="password"
               type="password"
               required
-              onChange={(event) => setPassword(event.target.value)}
+              aria-label="senha"
+              onChange={e => setPassword(e.target.value)}
             />
-            <button className="btn btn-primary" type="submit" onClick={(event) => handleSubmit(event)}>Enviar</button>
+            {error ? (
+              <small>Login ou Password deve conter no mínimo 5 caracteres</small>
+            ) : null}
+            <button className="btn btn-primary" type="submit" aria-label="submit" disabled={error}>Enviar</button>
           </form>
         </div>
       </div>
     </>
   )
-      }
+}
+
 export default LoginForm
