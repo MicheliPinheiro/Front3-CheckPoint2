@@ -1,33 +1,8 @@
 # Desenvolvimento
 
 ## Índice
-* [Iniciando o App](#iniciando-o-app)
-* [Dependências](#dependências)
+
 * [Recomendações a Seguir](#recomendações)
-
-## Iniciando o App
-
-Instalamos as dependências
-
-`npm install`
-
-Podemos iniciar nossa aplicação com o comando
-
-`npm start`
-
-## Dependências
-
-Se utilizará a versão de React 18.0.2 
-
-As dependências básicas serão:
-* React
-* testing-library
-* react-router-dom
-* react-dom
-
-## Recomendações
-
-Para ajudar a organizar e entregar a tempo, deixamos-lhe uma proposta de workflow. De qualquer forma, você pode se organizar da forma que achar mais conveniente para atingir o objetivo almejado:
 
 ### Passo 1: Criando Rotas
 

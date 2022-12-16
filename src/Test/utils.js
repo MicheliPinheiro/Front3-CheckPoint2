@@ -1,0 +1,41 @@
+import { render } from "@testing-library/react"
+import { BrowserRouter, MemoryRouter, Routes, Route } from "react-router-dom"
+import { ThemeProvider } from "../Hooks/useTheme"
+import Home from "../Routes/Home"
+import Detail from "../Routes/Detail"
+import Login from "../Routes/Login"
+import App from "../App"
+import { LocalStorageTokenProvider } from "../Hooks/useLocalStorageToken"
+import { DentistInfoProvider } from "../Hooks/useDentistInfo"
+import { PatientInfoProvider } from "../Hooks/usePatientInfo"
+
+
+const renderWithContext = (ui, providerValue)=>{
+    return render(
+        <BrowserRouter>
+            <ThemeProvider value={providerValue || {theme: "light", data: []}} > 
+                <LocalStorageTokenProvider>
+                    <DentistInfoProvider>
+                        <PatientInfoProvider>
+                            {ui}
+                        </PatientInfoProvider>
+                    </DentistInfoProvider>
+                </LocalStorageTokenProvider>  
+            </ThemeProvider>
+        </BrowserRouter>
+    )
+}
+
+export const renderWithRouter = (ui, {route = '/', path='/'}) => {
+    window.history.pushState({}, 'Test page', route)
+    return render(
+        <MemoryRouter initialEntries={[route]}>
+            <Routes>
+                <Route index path={path} element={ui}/>
+            </Routes>
+        </MemoryRouter>
+    )
+}
+
+export * from "@testing-library/react"
+export {renderWithContext as render} 

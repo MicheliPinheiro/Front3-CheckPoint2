@@ -1,7 +1,7 @@
-import styles from "./LoginForm.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTheme } from "./../Hooks/useTheme";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useTheme } from "./../../Hooks/useTheme"
+import styles from "./Form.module.css"
 
 const LoginForm = () => {
 
@@ -10,43 +10,27 @@ const LoginForm = () => {
   const [checkInputs, setCheckInputs] = useState(false)
   const [token, setToken] = useState('')
   const navigate = useNavigate()
-  const { theme } = useTheme()
+  const {theme} = useTheme()
 
-  // function passValidation(password) {
-  //   setPassword(password)
-  //   console.log(password)
-  // }
+  function passValidation(password) {
+    setPassword(password)
+    console.log(password)
+  }
 
-  // function loginValidation(login) {
-  //   setLogin(login)
-  //   console.log(login)
-  // }
+  function loginValidation(login) {
+    setLogin(login)
+    console.log(login)
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //Nesse handlesubmit você deverá usar o preventDefault,
-    //enviar os dados do formulário e enviá-los no corpo da requisição 
-    //para a rota da api que faz o login /auth
-    //lembre-se que essa rota vai retornar um Bearer Token e o mesmo deve ser salvo
-    //no localstorage para ser usado em chamadas futuras
-    //Com tudo ocorrendo corretamente, o usuário deve ser redirecionado a página principal,com react-router
-    //Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
   }
 
-  const dados = {
-    "username": login,
-    "password": password
-  }
+  const dados = {"username": login, "password": password}
 
-  let requestHeaders = {
-    'Content-Type': 'application/json'
-  }
+  let requestHeaders = {'Content-Type': 'application/json'}
 
-  let requestConfiguration = {
-    method: 'POST',
-    body: JSON.stringify(dados),
-    headers: requestHeaders
-  }
+  let requestConfiguration = {method: 'POST', body: JSON.stringify(dados), headers: requestHeaders}
 
   try {
     fetch(`http://dhodonto.ctdprojetos.com.br/auth`, requestConfiguration)
@@ -69,8 +53,6 @@ const LoginForm = () => {
   
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
       <div className={theme === 'dark' ? `text-center card container ${styles.card} ${styles.cardDark}` : `text-center card container ${styles.card}`}>
         <div className={`card-body ${styles.cardBody}`}>
           <form onSubmit={handleSubmit}>
@@ -89,7 +71,6 @@ const LoginForm = () => {
               required
               onChange={(event) => setPassword(event.target.value)}
             />
-            {/* Lembrar de adicionar a estilização do erro */}
             <button className="btn btn-primary" type="submit" onClick={(event) => handleSubmit(event)}>Enviar</button>
           </form>
         </div>
@@ -97,4 +78,4 @@ const LoginForm = () => {
     </>
   )
       }
-export default LoginForm;
+export default LoginForm

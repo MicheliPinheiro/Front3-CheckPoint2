@@ -1,8 +1,9 @@
-import styles from "./Footer.scss";
-import { useTheme } from "../Hooks/useTheme";
+import styles from "./Footer.module.css"
+import { useTheme } from "./../../Hooks/useTheme"
 
 const Footer = () => {
-  const { theme } = useTheme();
+
+  const {theme} = useTheme()
 
   const scrollToTop = () => {
     window.scrollTo(0, 0)
@@ -11,15 +12,11 @@ const Footer = () => {
   return (
     <footer>
       <div className={styles.footerWrapper}>
-        <button className={`btn btn-danger ${styles.top}`} onClick={scrollToTop}>Voltar para o topo</button>
-        {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar a class navbar-dark bg-dark ou navbar-light bg-light  */}
-        <div className={`navbar-${theme} bg-${theme}} ${styles.footer}`}>          
+        <button className={`btn btn-danger ${styles.top}`} onClick={scrollToTop}>Ir para o topo</button>
+        <div className={`navbar-${theme} bg-${theme}} ${styles.footer}`}>
           <div className="container">
             <div className={`row`}>
               <div className="col-sm-12 col-lg-6">
-                {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-                // está em dark mode e deverá utilizar o css correto */}
                 <img className={theme === 'dark' ? `${styles.dhLogo} ${styles.iconsDark}` : `${styles.dhLogo}`} src="/images/DH.png" alt='DH-logo' />
               </div>
               <div className={`col-sm-12 col-lg-6 ${styles.icons}`}>

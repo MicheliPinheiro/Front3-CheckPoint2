@@ -2,6 +2,9 @@
 
 Exame Final de Frontend III
 
+Aluna: Micheli Pinheiro Teresa
+Turma: 05
+
 ## Índice
 * [Requisitos](#requisitos)
   * [Condições mínimas de aprovação](#condições-mínimas-de-aprovação)
@@ -15,31 +18,11 @@ Exame Final de Frontend III
 
 ## Requisitos
 
-É essencial clonar este projeto em um repositório para poder trabalhar. Não serão aceitos projetos que tenham sido realizados sem partir deste modelo.
-
-```
-# Clone o repositório para o seu computador
-git clone https://github.com/DigitalHouseBrasil/CTD-FE3-Checkpoint2-Template
-
-# Entre na pasta do projeto
-cd CTD-FE3-Checkpoint2-Template
-
-# Elimine os links do repositório de DH
-git remote rm origin
-
-# Adicione seu projeto a sua conta do github, ajuste o link para seu nome de usuário e repositório
-git remote add origin https://github.com/<nomedousuario>/<nomedoprojeto>
-
-# Envie o repositório para o github
-git push -u origin main
-```
 ### Condições mínimas de aprovação
 
 As seguintes condições são requisitos mínimos necessários para a aprovação final:
 
 * **Cumprir todas as funcionalidades obrigatórias**
-* As bibliotecas necessárias para fazer o desenvolvimento já está no package.json
-* O projeto deve ser desenvolvido utilizando Javascript com React.JS.
 * O projeto deve contar com ao menos 5 testes unitários escritos para a aplicação. Para isso, deve ser feito com Jest e React Testing Library. Será considerado a importância desses testes como em um projeto real.
 * Se espera que a página de login, contenha os fluxos de validação necessários (mínimo 2 validações), para um submit correto do formulário.
 * Nos casos em que é requirido fazer uma estilização, deverá realizar tendo em vista o tema do contexto global. 
